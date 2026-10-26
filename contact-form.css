@@ -1,0 +1,47 @@
+/*
+ * Shared contact-form styles. Scoped entirely under .scf-* class names so it can
+ * sit alongside any host page's own CSS without collisions.
+ *
+ * Theming: override these custom properties from the host page's stylesheet
+ * (e.g. map --scf-accent to your own brand color) rather than editing this file,
+ * so this file can stay byte-identical across every site that embeds it.
+ */
+:root {
+  --scf-accent: #215a43;
+  --scf-accent-hover: #164430;
+  --scf-ink: #20382f;
+  --scf-muted: #344c3d;
+  --scf-line: #dce4db;
+  --scf-bg-field: #fff;
+  --scf-bg-panel: #f6f7f2;
+  --scf-error: #9b3b2f;
+  --scf-radius: 10px;
+}
+.scf-form { display: grid; gap: 1.1rem; font-size: 1rem; line-height: 1.8; color: var(--scf-ink); }
+.scf-lead { margin: 0; color: var(--scf-muted); }
+.scf-row { display: grid; gap: .4rem; }
+.scf-row label { font-weight: 650; }
+.scf-required { margin-left: .4rem; font-size: .85em; font-weight: 700; color: var(--scf-error); }
+.scf-optional { margin-left: .4rem; font-size: .85em; font-weight: 500; color: var(--scf-muted); }
+.scf-row input, .scf-row textarea {
+  font: inherit; width: 100%; box-sizing: border-box; padding: .65rem .75rem; min-height: 2.75rem;
+  border: 1px solid var(--scf-line); border-radius: 8px; background: var(--scf-bg-field); color: var(--scf-ink);
+}
+.scf-row textarea { min-height: 7rem; resize: vertical; }
+.scf-row input:focus-visible, .scf-row textarea:focus-visible, .scf-form button:focus-visible {
+  outline: 3px solid #bd7922; outline-offset: 2px;
+}
+.scf-row input[aria-invalid="true"], .scf-row textarea[aria-invalid="true"] { border-color: var(--scf-error); }
+.scf-error { display: block; min-height: 1.4em; font-size: .9em; color: var(--scf-error); font-weight: 650; }
+.scf-honeypot { position: absolute; left: -9999px; top: auto; width: 0; height: 0; overflow: hidden; }
+.scf-honeypot input { width: 0; height: 0; padding: 0; margin: 0; border: 0; opacity: 0; }
+.scf-privacy { margin: 0; font-size: .9em; color: var(--scf-muted); line-height: 1.8; }
+.scf-status { min-height: 0; }
+.scf-actions { display: flex; }
+.scf-blocked { padding: 1rem 1.1rem; border: 1px dashed var(--scf-line); border-radius: var(--scf-radius); background: var(--scf-bg-panel); }
+.scf-blocked p { margin: 0 0 .85rem; color: var(--scf-muted); line-height: 1.85; }
+.scf-status-note { margin: .75rem 0 0; font-weight: 650; color: var(--scf-accent); }
+@media (max-width: 480px) {
+  .scf-form { gap: .85rem; }
+  .scf-blocked { padding: .85rem; }
+}

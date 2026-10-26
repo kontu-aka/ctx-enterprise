@@ -1,0 +1,2 @@
+# Preserve accepted application bytes and hash fixtures across checkouts.
+* -text
