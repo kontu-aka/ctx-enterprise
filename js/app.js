@@ -60,7 +60,7 @@
   function proposalSection(rows, reviewMode = false) {
     return `<section class="flow-section">${flowTitle(reviewMode ? '1' : '2', reviewMode ? '診断結果から作成した提案内容' : '企業向けCTXからの改善提案')}<p class="flow-lead">${rows.pending.length ? '課題と同じテーマに沿った検討用の提案です。会社の状況に合うか、担当者と確認してください。' : '整備の申告があった対策を維持・確認するための提案です。'} 効果を検証したものではありません。</p>${groupedCards(rows.proposals, row => {
       const copy = guidance[row.id];
-      return `<article class="proposal-card"><h3>${esc(row.title)}</h3><p class="proposal-basis">${row.label}（回答上の状況）</p><p class="proposal-title">${esc(copy[0])}</p><dl><div><dt>改善を目指す点</dt><dd>${esc(copy[1])}</dd></div><div><dt>次にすること</dt><dd>${esc(copy[2])}</dd></div>${contact(row.owner)}</dl></article>`;
+      return `<article class="proposal-card"><div class="proposal-copy"><h3>${esc(row.title)}</h3><p class="proposal-basis">${row.label}（回答上の状況）</p><p class="proposal-title">${esc(copy[0])}</p><dl><div><dt>改善を目指す点</dt><dd>${esc(copy[1])}</dd></div><div><dt>次にすること</dt><dd>${esc(copy[2])}</dd></div></dl></div><dl class="proposal-contact">${contact(row.owner)}</dl></article>`;
     }, reviewMode ? 'review-proposals-more' : 'draft-proposals-more', '提案')}</section>`;
   }
   function rulePreview(rows) {
@@ -104,6 +104,7 @@
   function start() {
     return `<div class="start-heading"><div class="eyebrow">ENTERPRISE AI / START HERE</div><span class="version-tag">無料体験版</span></div>
       <section class="hero"><div class="hero-copy"><h1>AIを使い始める前に、<br><em>会社で決めること</em>を<br>見える形に。</h1><p class="lead">何を渡していい？ 誰が確認する？<br>9つのテーマから導入準備を整理し、<br>自社ルールを考えるための草案を体験できます。</p><div class="hero-actions">${button('begin', 'AI導入診断をはじめる <span aria-hidden="true">→</span>')}<span class="muted">9テーマ・目安5分</span></div><p class="micro">登録・インストール・APIキー不要</p></div>
+      <button type="button" class="sales-video-card" data-action="open-sales-video" aria-haspopup="dialog" aria-controls="sales-video-dialog" aria-label="約56秒でわかる企業向けCTX：紹介動画を大きく表示する"><span class="video-thumbnail"><img src="assets/ctx-enterprise-sales-v6-r1-poster.jpg" width="1280" height="720" alt="" decoding="sync"><span class="video-play-mark" aria-hidden="true">▶</span></span><span class="video-card-label">約56秒でわかる企業向けCTX</span><span class="video-card-hint">クリックして動画を開く</span></button>
       <div class="hero-visual" aria-label="診断からルール草案、模擬承認へ進む流れ"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><span class="visual-kicker">YOUR AI READINESS</span><div class="visual-card card-a"><span class="visual-icon">01</span><div><small>CHECK</small><strong>導入の準備を知る</strong></div><span class="visual-dots">•••</span></div><div class="visual-connector">↓</div><div class="visual-card card-b"><span class="visual-icon">02</span><div><small>MAKE A DRAFT</small><strong>ルールを言葉にする</strong></div><span class="visual-tick">↗</span></div><div class="visual-connector lower">↓</div><div class="visual-card card-c"><span class="visual-icon">03</span><div><small>REVIEW TOGETHER</small><strong>差分を見て、考える</strong></div><span class="visual-tick">✓</span></div><div class="visual-caption"><span class="signal"></span> すべて画面内のシミュレーション</div></div></section>
       ${note('<strong>自社の状況に近いものを選んで、実際にお試しいただけます。</strong> 会社名や顧客情報・認証情報などの実データの入力は不要です。回答はこのタブのメモリ上だけで扱い、外部送信・保存・AI設定への適用は行いません。')}
       <section class="journey"><div class="section-heading"><h2>この体験版でできること</h2><span class="mini-label">3 SMALL STEPS</span></div><div class="three-col"><article><span class="feature-number">01 / CHECK</span><h3>現状を整理する</h3><p>分からないことも、そのままで。<br>未確認の項目を見つけます。</p></article><article><span class="feature-number">02 / DRAFT</span><h3>対策を草案にする</h3><p>Codex・Claude Code向けに、<br>対策と確認先をまとめます。</p></article><article><span class="feature-number">03 / REVIEW</span><h3>変更と承認を体験する</h3><p>変更前後を見比べて、<br>模擬承認・保留を試せます。</p></article></div></section><p class="footnote">Codex・Claude CodeなどのAIコーディング支援ツールを社内で導入する企業向けの検討ツールです。OpenAI社・Anthropic社など、各製品の提供元との提携・公認関係はありません。Codex向け・Claude Code向けの草案は、同じ検討内容の製品名を入れ替えたものであり、製品ごとに異なる安全設定が完了していることを示すものではありません。</p>`;
@@ -185,6 +186,19 @@
     if (step && Number(step.dataset.step) <= state.max) { navigate(Number(step.dataset.step)); return; }
     const target = event.target.closest('[data-action]'); if (!target) return;
     switch (target.dataset.action) {
+      case 'open-sales-video': {
+        videoTrigger = target;
+        if (!salesVideoPlayer.hasAttribute('src')) {
+          salesVideoPlayer.poster = salesVideoPlayer.dataset.poster;
+          salesVideoPlayer.src = salesVideoPlayer.dataset.src;
+          salesVideoPlayer.load();
+        }
+        salesVideoDialog.showModal();
+        salesVideoDialog.scrollTop = 0;
+        closeSalesVideo.focus({ preventScroll: true });
+        break;
+      }
+      case 'close-sales-video': salesVideoDialog.close(); break;
       case 'begin': navigate(1); break;
       case 'back': navigate(Math.max(0, state.page - 1)); break;
       case 'results': state.notice = ''; navigate(2); break;
@@ -241,6 +255,25 @@
       changed(); state.options[input.dataset.option] = input.checked;
       const top = window.scrollY; render(false); app.querySelector(`[data-option="${input.dataset.option}"]`).focus({ preventScroll: true }); window.scrollTo(0, top);
     } else if (input.id === 'acknowledge') { state.acknowledged = input.checked; app.querySelector('[data-action="approve"]').disabled = !input.checked; }
+  });
+  const salesVideoDialog = document.getElementById('sales-video-dialog');
+  const salesVideoPlayer = document.getElementById('sales-video-player');
+  const closeSalesVideo = document.getElementById('close-sales-video');
+  let videoTrigger = null;
+  salesVideoDialog.addEventListener('focusin', event => {
+    if (event.target.dataset.videoFocus === 'start') salesVideoPlayer.focus({ preventScroll: true });
+    if (event.target.dataset.videoFocus === 'end') closeSalesVideo.focus({ preventScroll: true });
+  });
+  salesVideoDialog.addEventListener('close', () => {
+    salesVideoPlayer.pause();
+    salesVideoPlayer.removeAttribute('src');
+    salesVideoPlayer.load();
+    const trigger = videoTrigger;
+    videoTrigger = null;
+    if (trigger && trigger.isConnected) trigger.focus({ preventScroll: true });
+  });
+  window.addEventListener('hashchange', () => {
+    if (salesVideoDialog.open) salesVideoDialog.close();
   });
   const dialog = document.getElementById('reset-dialog');
   document.getElementById('cancel-reset').addEventListener('click', () => dialog.close());
