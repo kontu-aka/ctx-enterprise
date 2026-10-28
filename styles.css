@@ -58,6 +58,7 @@ em { font-style: normal; color: var(--green); }
 .sidebar-footer span { font-size: var(--text-small); }
 .footer-link { display: inline-flex; align-items: center; margin-top: .25rem; padding: .4rem 0; border: 0; background: none; color: #35543f; font-size: var(--text-small); font-weight: 650; text-decoration: underline; min-height: 2.75rem; }
 .footer-link:hover { color: var(--green); }
+.operator-logo { display: block; width: min(100%, 360px); height: auto; margin: 0 auto 1rem; }
 .operator-info { display: grid; gap: 1rem; margin: 0 0 .5rem; }
 .operator-info dt { color: var(--green); font-weight: 650; margin-bottom: .25rem; }
 .operator-info dd { margin: 0; color: var(--ink); }
