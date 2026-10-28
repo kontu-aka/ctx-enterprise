@@ -351,3 +351,37 @@ dialog p { font-size: 1rem; color: var(--muted); }
   a[href]::after { content: ''; }
 }
 
+
+/* Balanced introduction columns with a user-initiated video card. */
+.hero { grid-template-columns: minmax(0, 11fr) minmax(0, 9fr); gap: 1.5rem 1rem; align-items: center; padding-inline-end: 40px; }
+.hero > .hero-visual { grid-column: 1 / -1; margin-inline-end: -40px; }
+.sales-video-card { display: grid; gap: 10px; align-self: center; justify-self: center; width: 100%; max-width: 540px; margin-block-end: 48px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #fff; color: var(--ink); text-align: left; font: inherit; box-shadow: 0 5px 18px #20382f08; }
+.sales-video-card:hover { border-color: #759981; }
+.video-thumbnail { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 8px; background: #20382f; }
+.video-thumbnail img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.video-play-mark { position: absolute; inset: 0; margin: auto; width: clamp(56px, 6vw, 76px); height: clamp(56px, 6vw, 76px); border: 2px solid #fff; border-radius: 50%; display: grid; place-items: center; padding-left: 4px; background: #164430e8; color: #fff; font-size: clamp(26px, 2.8vw, 34px); line-height: 1; box-shadow: 0 2px 8px #102b2455; }
+.video-card-label { font-size: 1rem; line-height: 1.5; font-weight: 700; }
+.video-card-hint { font-size: max(16px, .75rem); line-height: 1.5; color: var(--muted); }
+#sales-video-dialog { width: min(1000px, calc(100% - 32px)); max-width: 1000px; max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); padding: 0; margin: auto; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; }
+#sales-video-dialog .video-modal-header { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: #fff; }
+#sales-video-dialog h2 { flex: 1; min-width: 0; margin: 0; font-size: 1rem; line-height: 1.5; }
+#sales-video-dialog .button { flex-shrink: 0; min-height: 48px; padding: 8px 12px; font-size: 1rem; white-space: nowrap; }
+#sales-video-dialog .video-modal-body { padding: 12px 16px 16px; }
+#sales-video-dialog .sales-video-player { display: block; width: 100%; max-width: calc((100dvh - 200px) * 16 / 9); height: auto; aspect-ratio: 16 / 9; margin: 0 auto; background: #20382f; object-fit: contain; border-radius: 8px; }
+#sales-video-dialog #sales-video-dialog-note { margin: 10px 0 0; color: var(--muted); font-size: max(16px, .75rem); line-height: 1.5; }
+@media (max-width: 1200px) { .hero { grid-template-columns: minmax(0, 1fr); padding-inline-end: 0; } .hero > .hero-visual { margin-inline-end: 0; } .sales-video-card { justify-self: start; margin-block-end: 0; } }
+@media (max-width: 480px) {
+  #sales-video-dialog { width: calc(100% - 24px); max-height: calc(100dvh - 24px); }
+  #sales-video-dialog .video-modal-header { padding: 10px 12px; gap: 8px; }
+  #sales-video-dialog .video-modal-body { padding: 10px 12px 12px; }
+}
+/* Shared content-sized tracks align both edges of each confirmation callout. */
+.proposal-card { display: grid; grid-template-rows: subgrid; grid-row: span 2; row-gap: .75rem; }
+.proposal-copy { min-width: 0; }
+.proposal-card > .proposal-contact { margin: 0; }
+.proposal-card .contact-callout { align-self: stretch; }
+@media (max-width: 850px) {
+  .proposal-card { display: block; grid-row: auto; }
+  .proposal-card > .proposal-contact { margin-top: .75rem; }
+}
+@media print { .sales-video-card { display: none !important; } }
