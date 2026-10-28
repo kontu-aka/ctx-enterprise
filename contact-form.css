@@ -45,3 +45,53 @@
   .scf-form { gap: .85rem; }
   .scf-blocked { padding: .85rem; }
 }
+
+.scf-status:not(:empty) { padding: .8rem; border: 1px solid var(--scf-line); border-radius: 8px; background: #eef4e9; font-weight: 650; overflow-wrap: anywhere; }
+.scf-status[data-state="error"], .scf-status[data-state="unknown"] { background: #fff4df; border-color: #9a783b; color: #543b14; }
+.scf-form button:disabled { opacity: .75; cursor: not-allowed; }
+.scf-form input:disabled, .scf-form textarea:disabled { opacity: 1; color: var(--scf-ink); background: #f0f2ee; }
+.scf-privacy a { color: #215a43; text-decoration: underline; overflow-wrap: anywhere; }
+.scf-actions button { white-space: normal; overflow-wrap: anywhere; max-width: 100%; }
+
+/* Compact layout is scoped to the enterprise contact dialog only. */
+#contact-dialog {
+  width: min(640px, calc(100% - 32px)); max-width: 640px;
+  max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px);
+  margin: auto; padding: 0; font-size: 18px; line-height: 1.6;
+  overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain;
+  scroll-padding-top: 112px;
+}
+:root[data-text-size='large'] #contact-dialog { font-size: 19px; }
+:root[data-text-size='xlarge'] #contact-dialog { font-size: 20px; }
+#contact-dialog .contact-dialog-header {
+  display: flex; align-items: center; gap: 12px; position: sticky; top: 0;
+  padding: 12px 20px; background: #fff; border-bottom: 1px solid var(--scf-line); z-index: 1;
+}
+#contact-dialog h2 { font-size: 1.333333em; line-height: 1.4; margin: 0; flex: 1; min-width: 0; }
+#contact-dialog h2:focus { outline: none; }
+#contact-dialog h2 span { display: inline-block; white-space: nowrap; }
+#contact-dialog .contact-dialog-body { padding: 14px 20px 20px; }
+#contact-dialog .contact-dialog-note { font-size: .888889em; line-height: 1.6; margin: 0 0 12px; padding: 10px 12px; }
+#contact-dialog .scf-form { font-size: 1em; gap: 14px; line-height: 1.6; }
+#contact-dialog .scf-lead { font-size: .944444em; line-height: 1.6; margin: 0; }
+#contact-dialog .scf-row { gap: 4px; min-width: 0; }
+#contact-dialog .scf-row label { font-size: 1em; line-height: 1.5; }
+#contact-dialog .scf-row input, #contact-dialog .scf-row textarea {
+  font-size: 1em; line-height: 1.5; padding: 10px 12px; min-height: 52px; border-radius: 8px;
+}
+#contact-dialog .scf-row input { height: 52px; }
+#contact-dialog .scf-row textarea { height: 120px; min-height: 96px; }
+#contact-dialog .scf-error { min-height: 0; font-size: .888889em; line-height: 1.5; }
+#contact-dialog .scf-error:empty { display: none; }
+#contact-dialog .scf-privacy { font-size: .888889em; line-height: 1.65; margin: 0; }
+#contact-dialog .scf-required, #contact-dialog .scf-optional { font-size: .888889em; }
+#contact-dialog .scf-status { font-size: 1em; line-height: 1.6; }
+#contact-dialog .scf-status:not(:empty) { padding: 10px 12px; }
+#contact-dialog .button { font-size: 1em; line-height: 1.5; min-height: 48px; padding: 10px 16px; }
+#contact-dialog #close-contact { flex-shrink: 0; white-space: nowrap; padding: 8px 12px; }
+@media (max-width: 480px) {
+  #contact-dialog { width: calc(100% - 24px); max-height: calc(100dvh - 24px); }
+  #contact-dialog .contact-dialog-header { padding: 10px 14px; gap: 8px; }
+  #contact-dialog .contact-dialog-body { padding: 12px 14px 16px; }
+  #contact-dialog .scf-form { gap: 12px; }
+}

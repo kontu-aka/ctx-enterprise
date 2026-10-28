@@ -201,7 +201,10 @@
         const wasOpen = document.getElementById('operator-dialog').open;
         if (wasOpen) document.getElementById('operator-dialog').close();
         contactForm.onOpen();
-        document.getElementById('contact-dialog').showModal();
+        const contactDialog = document.getElementById('contact-dialog');
+        contactDialog.showModal();
+        document.getElementById('contact-title').focus({ preventScroll: true });
+        contactDialog.scrollTop = 0;
         break;
       }
       case 'print-results': window.print(); break;
@@ -246,7 +249,7 @@
     location.hash = 'start'; render(true, false); announce('すべての回答と模擬判断を消去しました。');
   });
   document.getElementById('close-operator').addEventListener('click', () => document.getElementById('operator-dialog').close());
-  const contactForm = window.CTXContactForm.create({ sourceLabel: '企業向けCTX 無料AI導入診断（体験版）' });
+  const contactForm = window.CTXContactForm.create({ sourceLabel: '企業向けCTX 無料AI導入診断（体験版）', endpoint: 'https://formspree.io/f/mqpenzan' });
   contactForm.mount(document.getElementById('contact-form-mount'));
   document.getElementById('close-contact').addEventListener('click', () => document.getElementById('contact-dialog').close());
   document.getElementById('contact-dialog').addEventListener('close', () => contactForm.reset());
