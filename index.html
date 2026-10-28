@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://formspree.io/f/mqpenzan; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>企業向けCTX | 無料AI導入診断（体験版）</title>
-  <link rel="stylesheet" href="contact-form.css?v=m1-20261026">
+  <link rel="stylesheet" href="contact-form.css?v=contact-size-20261028">
   <link rel="stylesheet" href="styles.css?v=m1-20261026">
   <script defer src="js/data.js"></script>
   <script defer src="js/engine.js"></script>
   <script defer src="js/presentation.js"></script>
-  <script defer src="js/contact-form.js"></script>
-  <script defer src="js/app.js?v=m1-20261026"></script>
+  <script defer src="js/contact-form.js?v=contact-20261028"></script>
+  <script defer src="js/app.js?v=contact-size-20261028"></script>
 </head>
 <body>
-  <div class="demo-strip"><span class="signal"></span> 試作段階の無料体験版 <span class="strip-divider">/</span> 会社名や実データの入力は不要です <span class="strip-divider">/</span> 安全性を保証する診断ではありません</div>
+  <div class="demo-strip"><span class="signal"></span> 試作段階の無料体験版 <span class="strip-divider">/</span> 診断に会社名や実データの入力は不要です <span class="strip-divider">/</span> 安全性を保証する診断ではありません</div>
   <div class="shell">
     <aside class="sidebar">
       <a class="brand" href="#start" aria-label="企業向けCTX スタート"><span class="brand-mark">C<span>↗</span></span><span>企業向けCTX<small>無料体験版</small></span></a>
       <div class="workspace-label">AI導入の準備を、ひとつずつ。</div>
       <nav id="steps" aria-label="診断の5画面"></nav>
-      <div class="sidebar-note"><span class="mini-label">このツールについて</span><strong>決めるための、たたき台。</strong><p>診断とルールの草案を通じて、<br>社内で確認することを整理します。</p><span class="pill">外部送信なし</span> <span class="pill">登録不要</span></div>
+      <div class="sidebar-note"><span class="mini-label">このツールについて</span><strong>決めるための、たたき台。</strong><p>診断とルールの草案を通じて、<br>社内で確認することを整理します。</p><span class="pill">診断データの外部送信なし</span> <span class="pill">登録不要</span></div>
       <div class="sidebar-footer">企業向けCTX / 無料体験版</div>
     </aside>
     <div class="main-wrap">
@@ -49,16 +49,17 @@
       <div><dt>運営者</dt><dd>現在準備中です。確定次第、この画面に掲載します。</dd></div>
       <div><dt>ポートフォリオ</dt><dd><a href="https://kontu-aka.github.io/" target="_blank" rel="noopener noreferrer">kontu-aka.github.io を見る <span aria-hidden="true">↗</span></a><span class="contact-status">このリンク先が実際に公開済みかは、公開前にご確認ください。</span></dd></div>
       <div><dt>お問い合わせ</dt><dd>下の「お問い合わせフォームを開く」から、フォームでご連絡いただけます。メールアドレス・電話番号は現在準備中です。</dd></div>
-      <div><dt>データの取り扱い</dt><dd>診断の回答や生成された草案は、このタブのメモリ上だけで扱います。外部送信・保存・第三者提供は行いません。アクセス解析も行っていません。</dd></div>
+      <div><dt>データの取り扱い</dt><dd>診断の回答や生成された草案は、このタブのメモリ上だけで扱います。外部送信・保存・第三者提供は行いません。アクセス解析も行っていません。問い合わせは送信ボタンを押した場合のみFormspreeへ送信します。通信に伴うIPアドレス等の取り扱いはフォーム内の説明をご確認ください。</dd></div>
       <div><dt>改善のご相談について</dt><dd>診断結果をもとにした改善の実施や、会社ごとのAI利用ルールの整備は、有償でのご相談を予定しています。内容・料金は現在調整中です。</dd></div>
     </dl>
     <div class="actions"><button class="button secondary" data-action="open-contact-form">お問い合わせフォームを開く</button><button class="button primary" id="close-operator">閉じる</button></div>
   </dialog>
   <dialog id="contact-dialog" aria-labelledby="contact-title">
-    <h2 id="contact-title">お問い合わせフォーム</h2>
-    <p class="contact-dialog-note">この体験版の診断回答は送信されません。入力いただいた内容だけを扱います。</p>
+    <div class="contact-dialog-header"><h2 id="contact-title" tabindex="-1"><span>お問い合わせ</span><wbr><span>フォーム</span></h2><button type="button" class="button secondary" id="close-contact">閉じる</button></div>
+    <div class="contact-dialog-body">
+    <p class="contact-dialog-note">診断回答・ルール草案・模擬承認情報は外部送信しません。問い合わせの受付には第三者サービスFormspreeを利用します。</p>
     <div id="contact-form-mount"></div>
-    <div class="actions"><button class="button secondary" id="close-contact">閉じる</button></div>
+    </div>
   </dialog>
   <noscript>この体験版を操作するには、ブラウザのJavaScriptを有効にしてください。</noscript>
 </body>
