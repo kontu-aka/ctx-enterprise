@@ -39,7 +39,7 @@
     function markup() {
       return (
         '<form class="scf-form" novalidate>' +
-          '<p class="scf-lead">' + (config.sourceLabel ? esc(config.sourceLabel) + 'についての' : '') + 'ご相談・お問い合わせ内容をご記入ください。<strong>診断回答・ルール草案・模擬承認情報は送信されません。</strong></p>' +
+          '<p class="scf-lead">' + (config.sourceLabel ? esc(config.sourceLabel) + 'についての' : '') + 'ご相談・お問い合わせ内容をご記入ください。<strong>診断回答・AI向け指示案は送信されません。</strong></p>' +
           '<div class="scf-row">' +
             '<label for="' + fieldId('company') + '">会社名<span class="scf-optional">（任意）</span></label>' +
             '<input id="' + fieldId('company') + '" name="company" type="text" maxlength="' + LIMITS.company + '" autocomplete="organization">' +

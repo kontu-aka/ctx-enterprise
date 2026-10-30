@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "diagnosisBaselineCommit": "b12e4a2abb6f62d812164c77f26b47d1b2e156b4",
+  "termDefinitionsSHA256": "392251be43195b30cdbce221e84496a8651b51ce59decc04cb9b0ca3f90c1bb8",
+  "contentSecurityPolicy": "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src https://formspree.io/f/mqpenzan; object-src 'none'; base-uri 'none'; form-action 'none'\">",
+  "files": {
+    ".gitattributes": "1789bf6d6de8288c0884177b03eb8f7fda4752661aff1cf53b7529c9d17adab9",
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assets/ctx-enterprise-sales-v6-r1-ginga.mp4": "f3aac71d027b349abc87061edf6d399c9b50aadeb04b38d90a96580fa2c8ab71",
+    "assets/ctx-enterprise-sales-v6-r1-poster.jpg": "31571188a1311c983501ac87ab5d75af8c33c4dba1a9a50df4d8d8c7b22e542f",
+    "assets/kontu-studio-logo.png": "30c539f935c16d122dc3b1c6dd4e8a33a571177d81a05074dd7834689d0663a3",
+    "contact-form.css": "4236ff876e71d3b1e40e31414f7521b6d9743e7197d96c3dc728528879a46804",
+    "index.html": "39321cad0c07bced5d31b14fed7a78b775546a03d771eadd0ca0bbdb397f0a3f",
+    "js/app.js": "dc4b3d0e0faa2002f1f81a7e989e74442c76bae3024c791850df4275f61a5129",
+    "js/contact-form.js": "8e9d0f12a604e2d6440e87ede24560d3cc08e8a14505720379fccd20947197e0",
+    "js/data.js": "544c043059eecccbb6ba859383db21159f4ccc842eb4d45cd2dba8f1e9fb15f6",
+    "js/engine.js": "5ee34688ce19c2fe4ea4062a3f83ad7aa1028d2465157220aed248d303800ed3",
+    "js/presentation.js": "879f9ec38db3af2a82fb9b2da701b0a119a1287c13a2c04d3c4dc2e07a1caba6",
+    "styles.css": "52034cfb367de95e73acaf1738102a137f02c2a9e48bf93edc7baa95ecfb3624"
+  }
+}
