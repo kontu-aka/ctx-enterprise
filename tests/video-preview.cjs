@@ -1,7 +1,7 @@
 // Local preview only. GET/HEAD allowlist, byte ranges for native video seeking.
 const http=require('node:http'),fs=require('node:fs'),path=require('node:path');
 const root=path.resolve(__dirname,'..');
-const files=new Set(['index.html','styles.css','contact-form.css',...['app','data','engine','presentation','contact-form'].map(x=>'js/'+x+'.js'),'assets/ctx-enterprise-sales-v6-r1-ginga.mp4','assets/ctx-enterprise-sales-v6-r1-poster.jpg','assets/kontu-studio-logo.png']);
+const files=new Set(['index.html','styles.css','contact-form.css',...['app','data','engine','presentation','contact-form'].map(x=>'js/'+x+'.js'),'assets/ctx-enterprise-sales-v6-r1-ginga.mp4','assets/ctx-enterprise-sales-v6-r1-poster.jpg','assets/ctx-enterprise-sales-r5-r2-ginga.mp4','assets/ctx-enterprise-sales-r5-poster.jpg','assets/kontu-studio-logo.png']);
 const mockScript = `
 window.fetch = function(input, options) {
   if (String(input) !== 'https://formspree.io/f/mqpenzan') return Promise.reject(new Error('Preview blocks network'));
