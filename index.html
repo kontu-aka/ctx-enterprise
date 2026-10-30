@@ -6,21 +6,21 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src https://formspree.io/f/mqpenzan; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>企業向けCTX | 無料AI導入診断（体験版）</title>
   <link rel="stylesheet" href="contact-form.css?v=contact-size-20261028">
-  <link rel="stylesheet" href="styles.css?v=operator-logo-20261028">
-  <script defer src="js/data.js"></script>
+  <link rel="stylesheet" href="styles.css?v=r5-human-final-20261030">
+  <script defer src="js/data.js?v=r5-human-final-20261030"></script>
   <script defer src="js/engine.js"></script>
-  <script defer src="js/presentation.js"></script>
-  <script defer src="js/contact-form.js?v=contact-20261028"></script>
-  <script defer src="js/app.js?v=video-modal-20261028"></script>
+  <script defer src="js/presentation.js?v=r5-human-final-20261030"></script>
+  <script defer src="js/contact-form.js?v=yana-r5-copy-20261029"></script>
+  <script defer src="js/app.js?v=r5-human-final-20261030"></script>
 </head>
 <body>
   <div class="demo-strip"><span class="signal"></span> 試作段階の無料体験版 <span class="strip-divider">/</span> 診断に会社名や実データの入力は不要です <span class="strip-divider">/</span> 安全性を保証する診断ではありません</div>
   <div class="shell">
     <aside class="sidebar">
       <a class="brand" href="#start" aria-label="企業向けCTX スタート"><span class="brand-mark">C<span>↗</span></span><span>企業向けCTX<small>無料体験版</small></span></a>
-      <div class="workspace-label">AI導入の準備を、ひとつずつ。</div>
+      <div class="workspace-label">　AI導入の準備を ひとつずつ　</div>
       <nav id="steps" aria-label="診断の5画面"></nav>
-      <div class="sidebar-note"><span class="mini-label">このツールについて</span><strong>決めるための、たたき台。</strong><p>診断とルールの草案を通じて、<br>社内で確認することを整理します。</p><span class="pill">診断データの外部送信なし</span> <span class="pill">登録不要</span></div>
+      <div class="sidebar-note"><span class="mini-label">このツールについて</span><strong>AI導入前に、情報の扱いと担当者を決めるために</strong><p>企業・個人事業主のAI導入前の課題を9テーマで整理し改善のサンプルを確認できます。結果をもとにこんつの制作室への有償相談・制作依頼をご検討いただけます。実際のAI設定や会社のルールは変更しません。</p><span class="pill">診断データの外部送信なし</span> <span class="pill">登録不要</span></div>
       <div class="sidebar-footer">企業向けCTX / 無料体験版</div>
     </aside>
     <div class="main-wrap">
@@ -40,8 +40,9 @@
       <footer class="page-footer"><span>制作・運営：こんつの制作室</span><span>このツールはAI利用上のリスクを診断・可視化するものであり、実際のアクセス制御や情報漏えい防止を保証するものではありません。</span><span>ブラウザを再読み込みすると内容は消えます。</span><button type="button" class="footer-link" data-action="open-operator-info">運営者情報・お問い合わせ</button></footer>
     </div>
   </div>
+  <span id="term-explanation" class="term-note" role="region" aria-labelledby="term-title" hidden><span class="term-note-header"><strong id="term-title"></strong><button type="button" class="term-close" data-action="close-term" aria-label="用語の説明を閉じる">×</button></span><span id="term-description" class="term-note-text" role="status" aria-live="polite" aria-atomic="true"></span></span>
   <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
-  <dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">最初からやり直しますか？</h2><p>この体験版の回答・草案の選択・模擬承認を消去します。実環境への変更はありません。</p><div class="actions"><button class="button secondary" id="cancel-reset">キャンセル</button><button class="button primary" id="confirm-reset">消去してスタートへ</button></div></dialog>
+  <dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">最初からやり直しますか？</h2><p>診断の回答とAI向け指示案の選択を消去します。実環境への変更はありません。</p><div class="actions"><button class="button secondary" id="cancel-reset">キャンセル</button><button class="button primary" id="confirm-reset">消去してスタートへ</button></div></dialog>
   <dialog id="operator-dialog" aria-labelledby="operator-title">
     <h2 id="operator-title" tabindex="-1" autofocus>運営者情報・お問い合わせ</h2>
     <img class="operator-logo" src="assets/kontu-studio-logo.png" width="1448" height="1086" alt="こんつの制作室のロゴ：猫のしっぽがペンにつながるデザイン" loading="lazy" decoding="async">
@@ -49,19 +50,19 @@
       <div><dt>制作・運営</dt><dd>こんつの制作室</dd></div>
       <div><dt>ポートフォリオ</dt><dd><a href="https://kontu-aka.github.io/" target="_blank" rel="noopener noreferrer">kontu-aka.github.io を見る <span aria-hidden="true">↗</span></a></dd></div>
       <div><dt>お問い合わせ</dt><dd>下の「お問い合わせフォームを開く」から、フォームでご連絡いただけます。</dd></div>
-      <div><dt>データの取り扱い</dt><dd>診断の回答や生成された草案は、このタブのメモリ上だけで扱います。外部送信・保存・第三者提供は行いません。アクセス解析も行っていません。問い合わせは送信ボタンを押した場合のみFormspreeへ送信します。通信に伴うIPアドレス等の取り扱いはフォーム内の説明をご確認ください。</dd></div>
-      <div><dt>改善のご相談について</dt><dd>診断結果をもとにした改善の実施や、会社ごとのAI利用ルールの整備は、有償でのご相談を予定しています。内容・料金は現在調整中です。</dd></div>
+      <div><dt>データの取り扱い</dt><dd>診断の回答や生成されたAI向け指示案は、このタブのメモリ上だけで扱います。外部送信・保存・第三者提供は行いません。アクセス解析も行っていません。問い合わせは送信ボタンを押した場合のみFormspreeへ送信します。通信に伴うIPアドレス等の取り扱いはフォーム内の説明をご確認ください。</dd></div>
+      <div><dt>改善のご相談について</dt><dd>診断結果をもとにした社内AI運用ルールの整備や、AI利用環境の改善について有償でご相談いただけます。具体的な対応範囲・費用は、ご相談の内容に応じて確認します。</dd></div>
     </dl>
     <div class="actions"><button class="button secondary" data-action="open-contact-form">お問い合わせフォームを開く</button><button class="button primary" id="close-operator">閉じる</button></div>
   </dialog>
   <dialog id="contact-dialog" aria-labelledby="contact-title">
     <div class="contact-dialog-header"><h2 id="contact-title" tabindex="-1"><span>お問い合わせ</span><wbr><span>フォーム</span></h2><button type="button" class="button secondary" id="close-contact">閉じる</button></div>
     <div class="contact-dialog-body">
-    <p class="contact-dialog-note">診断回答・ルール草案・模擬承認情報は外部送信しません。問い合わせの受付には第三者サービスFormspreeを利用します。</p>
+    <p class="contact-dialog-note">診断回答・AI向け指示案は外部送信しません。問い合わせの受付には第三者サービスFormspreeを利用します。</p>
     <div id="contact-form-mount"></div>
     </div>
   </dialog>
-  <dialog id="sales-video-dialog" aria-labelledby="sales-video-dialog-title" aria-describedby="sales-video-dialog-note"><span class="sr-only" tabindex="0" data-video-focus="start" aria-label="動画操作へ戻る"></span><div class="video-modal-header"><h2 id="sales-video-dialog-title">企業向けCTXの紹介動画</h2><button type="button" class="button secondary" id="close-sales-video" data-action="close-sales-video">閉じる</button></div><div class="video-modal-body"><video id="sales-video-player" class="sales-video-player" tabindex="0" controls playsinline preload="none" data-src="assets/ctx-enterprise-sales-v6-r1-ginga.mp4" data-poster="assets/ctx-enterprise-sales-v6-r1-poster.jpg" width="1920" height="1080" aria-label="企業向けCTXの紹介動画（約56秒・音声と字幕付き）">お使いのブラウザでは動画を再生できません。</video><p id="sales-video-dialog-note">再生ボタンを押すと音声付きで始まります。Escキーでも閉じられます。</p></div><span class="sr-only" tabindex="0" data-video-focus="end" aria-label="閉じる操作へ戻る"></span></dialog>
+  <dialog id="sales-video-dialog" aria-labelledby="sales-video-dialog-title" aria-describedby="sales-video-dialog-note"><span class="sr-only" tabindex="0" data-video-focus="start" aria-label="動画操作へ戻る"></span><div class="video-modal-header"><h2 id="sales-video-dialog-title">企業向けCTXの紹介動画</h2><button type="button" class="button secondary" id="close-sales-video" data-action="close-sales-video">閉じる</button></div><div class="video-modal-body"><video id="sales-video-player" class="sales-video-player" tabindex="0" controls playsinline preload="none" data-src="assets/ctx-enterprise-sales-v6-r1-ginga.mp4" data-poster="assets/ctx-enterprise-sales-v6-r1-poster.jpg" width="1920" height="1080" aria-label="企業向けCTXの紹介動画（約56秒・音声と字幕付き）">お使いのブラウザでは動画を再生できません。</video><p id="sales-video-dialog-note">再生ボタンを押すと音声付きで始まります。Escキーでも閉じられます。動画内の旧「変更・承認」と、現在の「提案内容の確認」は異なります。現在の05は提案内容・差分の確認のみで、承認・保留の操作はありません。</p></div><span class="sr-only" tabindex="0" data-video-focus="end" aria-label="閉じる操作へ戻る"></span></dialog>
   <noscript>この体験版を操作するには、ブラウザのJavaScriptを有効にしてください。</noscript>
 </body>
 </html>
