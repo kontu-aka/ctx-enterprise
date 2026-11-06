@@ -1,0 +1,1 @@
+'use strict';globalThis.CTX_EDITION=Object.freeze({"name":"free","displayName":"AI導入準備診断","instructions":false,"screenCount":5,"coconalaURL":null});

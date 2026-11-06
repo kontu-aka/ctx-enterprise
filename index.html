@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src https://formspree.io/f/mqpenzan; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>AI導入準備診断 | 企業向けCTX</title>
+  <link rel="stylesheet" href="styles.css?v=r6-free-split-20261106">
+  <script defer src="js/data.js?v=r6-free-split-20261106"></script>
+  <script defer src="js/engine.js?v=r6-free-split-20261106"></script>
+  <script defer src="js/presentation.js?v=r6-free-split-20261106"></script>
+  <script defer src="js/contact-form.js?v=r6-free-split-20261106"></script>
+  <script defer src="js/edition.js?v=r6-free-split-20261106"></script>
+  <script defer src="js/r6-proposals-content.js?v=r6-free-split-20261106"></script>
+  <script defer src="js/r6-view.js?v=r6-free-split-20261106"></script>
+  <script defer src="js/session-state.js?v=r6-free-split-20261106"></script>
+  <script defer src="js/ui-copy.js?v=r6-free-split-20261106"></script>
+  <script defer src="js/free-addon.js?v=r6-free-split-20261106"></script>
+  <script defer src="js/app.js?v=r6-free-split-20261106"></script>
+  <link rel="stylesheet" href="contact-form.css?v=r6-free-split-20261106">
+  <link rel="stylesheet" href="free-layout.css?v=r6-free-split-20261106">
+</head>
+<body>
+  <div class="demo-strip">診断回答は外部送信しません。</div>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="#start" aria-label="企業向けCTX スタート"><span class="brand-mark">C<span>↗</span></span><span>企業向けCTX<small>AI導入準備診断</small></span></a>
+      <div class="workspace-label"><span data-copy-key="shared-progress-title">AI導入準備の進め方</span></div>
+      <button type="button" id="mobile-progress" class="mobile-progress" data-action="toggle-mobile-nav" aria-controls="steps" aria-expanded="false"></button><nav id="steps" aria-label="診断の5画面"></nav>
+      <details class="sidebar-note sidebar-about"><summary>このツールについて</summary><strong>AI導入前に、情報の扱いと担当者を決めるために</strong><p>企業・個人事業主のAI導入前の課題を9テーマで整理し改善のサンプルを確認できます。結果をもとにこんつの制作室への有償相談・制作依頼をご検討いただけます。実際のAI設定や会社のルールは変更しません。</p><span class="pill">診断データの外部送信なし</span> <span class="pill">登録不要</span></details>
+      <div class="sidebar-footer">企業向けCTX / AI導入準備診断</div>
+    </aside>
+    <div class="main-wrap">
+      <header class="topbar">
+        <span class="topbar-context">企業向けCTX <span class="muted">/</span> AI導入準備診断</span>
+        <div class="display-tools">
+          <span id="text-size-label" class="text-size-label">文字サイズ</span>
+          <div class="text-size-switch" role="group" aria-labelledby="text-size-label">
+            <button type="button" data-text-size="standard" aria-pressed="true">標準</button>
+            <button type="button" data-text-size="large" aria-pressed="false">大きめ</button>
+            <button type="button" data-text-size="xlarge" aria-pressed="false">特大</button>
+          </div>
+          <span class="demo-badge">AI導入準備診断</span>
+        </div>
+      </header>
+      <main id="app" tabindex="-1"></main>
+      <footer class="page-footer"><span>制作・運営：こんつの制作室</span><span>このツールはAI利用上のリスクを診断・可視化するものであり、実際のアクセス制御や情報漏えい防止を保証するものではありません。</span><span><span id="run-state-status" role="status">回答は同じタブ内に一時保存します。</span></span><button type="button" class="footer-link" data-action="open-operator-info">運営者情報・お問い合わせ</button><button type="button" class="footer-link" data-action="reset">最初からやり直す</button></footer>
+    </div>
+  </div>
+  <span id="term-explanation" class="term-note" role="region" aria-labelledby="term-title" hidden><span class="term-note-header"><strong id="term-title"></strong><button type="button" class="term-close" data-action="close-term" aria-label="用語の説明を閉じる">×</button></span><span id="term-description" class="term-note-text" role="status" aria-live="polite" aria-atomic="true"></span></span>
+  <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
+  <dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">最初からやり直しますか？</h2><p>診断の回答を消去します。実環境への変更はありません。</p><div class="actions"><button class="button secondary" id="cancel-reset">キャンセル</button><button class="button primary" id="confirm-reset">消去してスタートへ</button></div></dialog>
+  <dialog id="operator-dialog" aria-labelledby="operator-title">
+    <h2 id="operator-title" tabindex="-1" autofocus>運営者情報・お問い合わせ</h2>
+    <img class="operator-logo" src="assets/kontu-studio-logo.png" width="1448" height="1086" alt="こんつの制作室のロゴ：猫のしっぽがペンにつながるデザイン" loading="lazy" decoding="async">
+    <dl class="operator-info">
+      <div><dt>制作・運営</dt><dd>こんつの制作室</dd></div>
+      <div><dt>ポートフォリオ</dt><dd><a href="https://kontu-aka.github.io/" target="_blank" rel="noopener noreferrer">kontu-aka.github.io を見る <span aria-hidden="true">↗</span></a></dd></div>
+      <div><dt>お問い合わせ</dt><dd>下の「お問い合わせフォームを開く」から、フォームでご連絡いただけます。</dd></div>
+      <div><dt>データの取り扱い</dt><dd>診断回答は同じタブ内に一時保存し、再読み込み時に復元します。「最初からやり直す」で消去できます。診断回答の外部送信・第三者提供は行いません。アクセス解析も行っていません。問い合わせは送信ボタンを押した場合のみFormspreeへ送信します。通信に伴うIPアドレス等の取り扱いはフォーム内の説明をご確認ください。</dd></div>
+      <div><dt>改善のご相談について</dt><dd>診断結果をもとにした社内AI運用ルールの整備や、AI利用環境の改善について有償でご相談いただけます。具体的な対応範囲・費用は、ご相談の内容に応じて確認します。</dd></div>
+    </dl>
+    <div class="actions"><button class="button secondary" data-action="open-contact-form">お問い合わせフォームを開く</button><button class="button primary" id="close-operator">閉じる</button></div>
+  </dialog>
+  <dialog id="contact-dialog" aria-labelledby="contact-title">
+    <div class="contact-dialog-header"><h2 id="contact-title" tabindex="-1"><span>お問い合わせ</span><wbr><span>フォーム</span></h2><button type="button" class="button secondary" id="close-contact">閉じる</button></div>
+    <div class="contact-dialog-body">
+    <p class="contact-dialog-note">診断回答・AI向け指示案は外部送信しません。問い合わせの受付には第三者サービスFormspreeを利用します。</p>
+    <div id="contact-form-mount"></div>
+    </div>
+  </dialog>
+  <dialog id="sales-video-dialog" aria-labelledby="sales-video-dialog-title" aria-describedby="sales-video-dialog-note"><span class="sr-only" tabindex="0" data-video-focus="start" aria-label="動画操作へ戻る"></span><div class="video-modal-header"><h2 id="sales-video-dialog-title">企業向けCTXの紹介動画</h2><button type="button" class="button secondary" id="close-sales-video" data-action="close-sales-video">閉じる</button></div><div class="video-modal-body"><video id="sales-video-player" class="sales-video-player" tabindex="0" controls playsinline preload="none" data-src="assets/ctx-enterprise-sales-r5-r2-ginga.mp4" data-poster="assets/ctx-enterprise-sales-r5-poster.jpg" width="1920" height="1080" aria-label="企業向けCTXの紹介動画（約57秒・音声と字幕付き）">お使いのブラウザでは動画を再生できません。</video><p id="sales-video-dialog-note">再生ボタンを押すと音声付きで始まります。Escキーでも閉じられます。この動画には有料版のAI向け指示案の紹介も含まれます。無料版では診断と改善提案を確認できます。実際のAI設定は変更しません。</p></div><span class="sr-only" tabindex="0" data-video-focus="end" aria-label="閉じる操作へ戻る"></span></dialog>
+  <noscript>この体験版を操作するには、ブラウザのJavaScriptを有効にしてください。</noscript>
+</body>
+</html>

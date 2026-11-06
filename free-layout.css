@@ -1,0 +1,7 @@
+/* Free consultation card, 04 only. */
+body[data-edition="free"][data-page="draft"] #app .improvement-consult {
+  margin-top: 1rem; padding: .7rem .9rem; line-height: 1.65;
+}
+body[data-edition="free"][data-page="draft"] #app .improvement-consult h2 { margin-bottom: .4rem; }
+body[data-edition="free"][data-page="draft"] #app .improvement-consult p { margin: 0 0 .3rem; }
+body[data-edition="free"][data-page="draft"] #app .improvement-consult .toolbar-buttons { margin-top: .5rem; }
