@@ -7,7 +7,6 @@
   const descriptions = ['診断の内容と進め方を知る', '9つのテーマを確認', '課題と確認先を知る', '改善提案と担当者を確認する', '課題と次の行動をまとめる'];
   const state = { page: 0, max: 0, answers: {}, notice: '', disclosures: {} };
   const app = document.getElementById('app');
-  let dockObserver;
   const tabSession=window.CTX_RUN_SESSION.create({
     edition:window.CTX_EDITION.name,ids:D.themes.map(t=>t.id),choices:D.choices.map(c=>c.value),pageCount:pages.length,
   });
@@ -23,22 +22,6 @@
     const control=document.getElementById('mobile-progress');
     if(control){control.innerHTML='<span>'+String(state.page+1).padStart(2,'0')+' '+names[state.page]+'</span><span>'+(state.page+1)+'/'+pages.length+' <span aria-hidden="true">⌄</span></span>';control.setAttribute('aria-expanded','false');}
   }
-  function installFixedActions(){
-    dockObserver?.disconnect();
-    const dockPages=[2];
-    document.body.dataset.hasDock=String(dockPages.includes(state.page));
-    document.documentElement.style.setProperty('--action-bar-height','0px');
-    if(!dockPages.includes(state.page))return;
-    const bar=document.createElement('aside');bar.id='fixed-actions';bar.className='fixed-actions';bar.setAttribute('aria-label','診断結果の次の操作');
-    if(state.page===2){
-      const next=app.querySelector('.bottom-actions [data-action="draft"]');
-      bar.innerHTML='<span class="fixed-actions-label">次に改善の進め方を確認します</span>';
-      if(next)bar.append(next);
-    }
-    app.append(bar);
-    const size=()=>document.documentElement.style.setProperty('--action-bar-height',Math.ceil(bar.getBoundingClientRect().height)+'px');
-    dockObserver=new ResizeObserver(size);dockObserver.observe(bar);size();
-  }
 
   const esc = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const copyLines = value => esc(value).replace(/\n/g, '<br class="human-copy-break">');
@@ -46,6 +29,17 @@
   const heading = (n, title, description, role = '') => `<div class="eyebrow">STEP 0${n + 1} <span>/ 0${pages.length}</span></div><h1>${title}</h1>${role ? `<p class="page-role-description" data-copy-key="page-role-${n}">${esc(role)}</p>` : ''}<p class="lead">${description}</p>`;
   const note = (text, cls = '') => `<div class="notice ${cls}"><span aria-hidden="true">ⓘ</span><p>${text}</p></div>`;
   const freeUI=window.CTX_FREE_UI?.create({esc,button});
+  const beginButton = () => button('begin', '<span data-copy-key="start-begin">02 AI導入診断</span> <span aria-hidden="true">→</span>');
+  function pageNavigation(page) {
+    const controls = [
+      beginButton(),
+      button('back', '← 01 AI導入前の準備', 'secondary') + button('results', '03 診断結果 →'),
+      button('back', '← 02 AI導入診断', 'secondary') + button('draft', '04 改善提案 →'),
+      button('back', '← 03 診断結果', 'secondary') + button('review', '05 改善内容の確認 →'),
+      button('back', '← 04 改善提案', 'secondary') + button('return-to-start', '01 最初に戻る ↺', 'secondary')
+    ];
+    return controls[page] ? '<nav class="page-navigation" aria-label="ページ移動">' + controls[page] + '</nav>' : '';
+  }
 
   // UI wording is separate from the unchanged classification/diff engine.
   const termDefinitions = [["コンテキスト", "このサイトでは、AIへ渡す情報・作業範囲・守ってほしい指示など、AIを使う前提（コンテキスト）を整理する考え方を指します。会社で決めることを整理するための体験版です。"], ["AI向け指示案", "Codex／Claude CodeなどのAIに渡す指示文のサンプルです。社内AI運用ルールは、会社が人間の従業員向けに定めるAI利用の決まりです。両者は別のものであり、このサイトのサンプルが会社の正式なルールや実際の設定になることはありません。"], ["送信前チェック（DLP）", "送信前チェックは、AIへ渡す内容に機密情報などが含まれていないか、送信する前に確かめることです。DLPは、こうした情報の外部流出を防ぐ仕組みを指します。仕組みによる見逃しもあるため、人による確認と併用します。この体験版にはDLP機能はありません。"], ["外部ツール接続の仕組み（MCP）", "外部ツール接続の仕組み（MCP）は、AIが外部の情報や道具を利用するための共通の接続方法です。コネクタなどを通じた社内文書検索・ファイル操作・外部サービスへの接続には、利用範囲と送信内容の確認が必要です。"], ["AIのメモリ機能（個人記憶）", "会話や利用者の情報を、後の会話で使うためAIサービスが保持する機能などを指します。保存の有無・削除方法・機密情報を残さない方針を、サービスごとに確認します。"], ["外部ツール・接続先", "AIが利用するファイル操作・社内文書検索・メール連携などの道具と、アクセス先のサービス・外部サイトを指します。会社が許可したものだけを使い、実際のアクセス制限も確認します。"], ["AI利用料金・API従量課金", "AIサービスの月額料金や、APIの使用量に応じて増える料金です。予算管理者が上限・通知・停止方法を検討します。草案に金額を書くだけで課金を止めることはできません。"], ["外部の不正な指示（プロンプトインジェクション）", "外部ページや文書に、AIをだまして情報を送らせるなどの指示が混ぜられることです。外部の文章を、社内の許可や実行承認として扱わない対策が必要です。"], ["監査ログ", "誰がいつ何を操作したかを確認する記録です。トラブルの原因や対応を後から確認するために使います。記録にはパスワードなどの秘密情報を残さないようにします。"], ["共有スキル", "AIが使う作業手順などをまとめ、ほかの利用者と共有するものです。配布前に内容を審査し、最新版を管理して古い手順を使わないようにします。"], ["ログ保存", "操作した日時・内容・エラーなどを、後から確認できるよう記録に残すことです。パスワードなどの秘密情報をそのまま記録せず、保存場所・閲覧する人・保存期間を決めます。"], ["基本ソフト（OS）", "WindowsやmacOSなど、パソコンを動かす基本ソフトです。AIに見せるファイルや操作を制限する設定を、管理担当者が確認します。"], ["APIキー", "サービスの機能をソフトから使うための秘密のコードです。パスワードと同じように扱い、AIへの入力や公開を避け、必要な担当者だけが保管・利用します。"]];
@@ -68,7 +62,7 @@
   function enhanceTerms(root) {
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
-        return (([3,5].includes(state.page) && node.parentElement.closest('h1,h2')) || node.parentElement.closest('button,a,label,summary,pre,code,script,style,textarea,select,.term-note,.important-caution,.r6-copy')) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+        return (([3,5].includes(state.page) && node.parentElement.closest('h1,h2')) || node.parentElement.closest('button,a,label,summary,pre,code,script,style,textarea,select,.term-note,.important-caution,.r6-copy,.review-print-summary')) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
       }
     });
     const scopes = new Map(), nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
@@ -274,7 +268,7 @@
   function start() {
     const edition=startEdition();
     return `<div class="start-heading"><div class="eyebrow">ENTERPRISE AI / START HERE</div><span class="version-tag">${esc(window.CTX_EDITION.displayName)}</span></div>
-      <section class="hero"><div class="hero-copy"><h1>${startText('title')}</h1><p class="lead">${startText('intro')}</p><p class="start-audience">${startText('audience')}</p><div class="hero-actions">${button('begin', '<span data-copy-key="start-begin">AI導入診断を始める</span> <span aria-hidden="true">→</span>')}<span class="muted">9テーマ・目安5分</span></div>
+      <section class="hero"><div class="hero-copy"><h1>${startText('title')}</h1><p class="lead">${startText('intro')}</p><p class="start-audience">${startText('audience')}</p><div class="hero-actions">${beginButton()}<span class="muted">9テーマ・目安5分</span></div>
       <details class="start-explanation"><summary>${startText('details')}</summary><div class="start-explanation-body">
         <section><h2>${startText('differenceTitle', true)}</h2><p>${startText('chat', true)}</p><p>${startText('coding', true)}</p></section>
         <section><h2>${startText('relationshipTitle')}</h2><h3>${startText('codexTitle')}</h3><p>${startText('codex', true)}</p><h3>${startText('claudeTitle')}</h3><p>${startText('claude', true)}</p></section>
@@ -286,7 +280,6 @@
       ${note('<strong>自社の状況に近いものを選んで実際にお試しいただけます。</strong> 会社名や顧客情報・認証情報などの実データの入力は不要です。診断回答はこのタブのメモリ上だけで扱い、<br class="human-copy-break">外部送信・保存・AI設定への適用は行いません。')}
       <section class="journey"><div class="section-heading"><h2>${startText('outcomesTitle')}</h2></div><div class="three-col"><article><span class="feature-number">${startText('riskLabel')}</span><h3>${startText('riskTitle')}</h3><p>${startText('riskBody')}</p></article><article><span class="feature-number">${startText('ownerLabel')}</span><h3>${startText('ownerTitle')}</h3><p>${startText('ownerBody')}</p></article>${edition.card}</div></section><div class="start-disclaimers"><p class="footnote">${startText('officialNote')}</p>${edition.note}</div>
       <div class="hero-visual start-guide" aria-label="AI導入準備の進め方"><span class="mini-label">${pages.length} STEPS</span><h2>${startText('guideTitle')}</h2><ol class="screen-guide">${names.map((name, i) => `<li><span class="guide-number">${String(i + 1).padStart(2, '0')}</span><div><strong>${i === 0 ? startText('title') : name}</strong><p>${i === 0 ? startText('guideIntro') : descriptions[i]}</p></div></li>`).join('')}</ol><p class="visual-caption">${edition.caption}</p></div>
-      <div class="start-bottom-actions">${button('begin', '<span data-copy-key="start-begin">AI導入診断を始める</span> <span aria-hidden="true">→</span>')}</div>
       ${freeUI?.consult('start')||''}`;
   }
   const assessmentCopy = Object.freeze({
@@ -303,7 +296,7 @@
         const copy = P[t.id];
         return `<fieldset class="question-card" aria-describedby="example-${t.id}"><legend><span class="question-number">${String(i + 1).padStart(2, '0')}</span>${t.title}</legend><h2>${assessmentText(t.id + '-question', copy.question)}</h2><div class="question-example" id="example-${t.id}"><span class="example-label">考え方の例</span><p>${assessmentText(t.id + '-example', copy.example)}</p></div><div class="choices">${D.choices.map(c => `<label class="choice"><input type="radio" name="${t.id}" value="${c.value}" ${state.answers[t.id] === c.value ? 'checked' : ''}><span><strong>${assessmentText(t.id + '-answer-' + c.value, copy.answers[c.value][0])}</strong><small>${esc(copy.answers[c.value][1])}</small><span class="choice-check" aria-hidden="true">✓ 選択中</span></span></label>`).join('')}</div></fieldset>`;
       }).join('')}</div>
-      <div class="bottom-actions"><span>回答は自動保存されません。</span><div>${button('back', '← スタートへ', 'secondary')}${button('results', '診断結果を見る →')}</div></div>`;
+      <p class="helper">回答は自動保存されません。</p>`;
   }
   // R6 results-only copy: does not feed assessment, draft generation or review.
   const resultsCopy = {
@@ -561,7 +554,7 @@
         <div><dt>${rt('check-label','確認内容')}</dt><dd><p>${rt(r.id+'-check',c.check)}</p></dd></div>
         </dl></div></details>`;
       }).join('')}</div>
-      <div class="bottom-actions results-actions"><div class="results-tools">${button('print-results',rt('print-button','印刷・PDFとして保存'),'secondary')}${button('reassess',rt('back-button','← 回答を見直す'),'secondary')}</div><div class="results-next">${button('draft',rt('next-button','改善提案を見る →'))}</div></div>`;
+      <div class="results-tools toolbar-buttons">${button('print-results',rt('print-button','印刷・PDFとして保存'),'secondary')}</div>`;
   }
   // Expand results for print/PDF, then restore the user's disclosure state.
   let printedResults = [];
@@ -574,7 +567,7 @@
     printedResults.forEach(([el, open]) => { el.open = open; }); printedResults = [];
   });
   function draft() {
-    return window.CTX_R6_VIEW.renderProposals(E.assess(state.answers), {button, contact, opened, consult:()=>freeUI?.consult('draft')||''});
+    return window.CTX_R6_VIEW.renderProposals(E.assess(state.answers), {contact, opened, consult:()=>freeUI?.consult('draft')||''});
   }
   function summaryDocument() {
     const H=window.CTX_R6_PROPOSALS.themes,V=window.CTX_R6_VIEW;
@@ -596,22 +589,24 @@
     const blocks=[...intro.map((t,i)=>i===0?'<h3>'+esc(t)+'</h3>':'<p>'+esc(t)+'</p>'),
       ...themes.map(r=>'<section><h4>'+esc(r.heading+'｜'+r.label)+'</h4>\n\n<p>'+esc(r.point)+'</p>\n\n<p>'+esc(r.ownerLine)+'</p></section>'),
       ...footer.map(t=>'<p>'+esc(t)+'</p>')];
-    return '<div id="summary-output" class="summary-full-text">'+blocks.join('\n\n')+'</div>';
+    return blocks.join('\n\n');
   }
   function review() {
     const documentData=summaryDocument(), {themes,pending}=documentData;
-    const item=r=>'<li><details data-summary-theme="'+r.id+'" data-disclosure="summary-theme-'+r.id+'" '+opened('summary-theme-'+r.id)+'><summary><span class="summary-theme-heading">'+esc(r.heading)+'</span><span class="status-tag '+r.status+'">'+esc(r.label)+'</span></summary><div class="summary-theme-body"><p>'+esc(r.point)+'</p><p class="small-note">'+esc(r.ownerLine)+'</p></div></details></li>';
+    const summary = summaryMarkup(documentData);
+    const item=r=>'<li><article class="summary-theme-card" data-summary-theme="'+r.id+'">'+
+      '<h3 class="summary-theme-header"><span class="summary-theme-heading">'+esc(r.heading)+'</span><span class="status-tag '+r.status+'">'+esc(r.label)+'</span></h3>'+
+      '<div class="summary-theme-body"><p>'+esc(r.point)+'</p><p class="small-note">'+esc(r.ownerLine)+'</p></div></article></li>';
     return heading(4,'改善内容の確認','診断で確認が必要だったテーマと、次に確認することをまとめます。詳しい手順や担当者は04で確認できます。実際の会社の設定やルールを変更する画面ではありません。','改善内容をまとめて確認できます。コピーや保存をして、社内での相談や検討に利用できます。')+
       '<section class="review-overview"><h2>'+esc(documentData.intro[2])+'</h2>'+
       (pending?'':'<p>全テーマに整備の申告があります。安全性や対策の有効性が確認できたことを意味するものではありません。</p>')+
       '<ul class="review-theme-list summary-theme-list">'+themes.map(item).join('')+'</ul>'+
       '<p class="helper">「不明・未回答」は、安全を確認できた状態として扱いません。担当者に確認するところから始めてください。</p></section>'+
       '<section class="flow-section"><h2>まとめを手元に残す</h2><p>診断結果と改善の要点・確認先を、コピー・保存して相談や社内確認に利用できます。AIに渡す指示文は含みません。</p>'+
-      '<details class="document-panel summary-document" data-disclosure="summary-full" '+opened('summary-full')+'><summary>確認用まとめの全文を見る</summary>'+summaryMarkup(documentData)+'</details>'+
       '<div class="toolbar-buttons">'+button('copy-summary','まとめをコピー','secondary')+button('save-summary','まとめを保存','secondary')+button('print-results','印刷・PDF保存','secondary')+'</div></section>'+
-      '<div class="bottom-actions"><div>'+button('back','← 改善提案へ','secondary')+button('reassess','回答を見直す','text')+'</div>'+
-      '</div>'+(freeUI?.completion()||'')+
-      '<div class="review-branding"><img src="assets/kontu-studio-logo.png" width="1448" height="1086" alt="こんつの制作室のロゴ：猫のしっぽがペンにつながるデザイン" loading="lazy" decoding="async"></div>';
+      (freeUI?.completion()||'')+
+      '<div class="review-branding"><img src="assets/kontu-studio-logo.png" width="1448" height="1086" alt="こんつの制作室のロゴ：猫のしっぽがペンにつながるデザイン" loading="lazy" decoding="async"></div>'+
+      '<article class="review-print-summary">'+summary+'</article>';
   }
 
   function render(focus = true, preserveDisclosures = true) {
@@ -628,8 +623,10 @@
       }
     }
     if(state.page===2&&freeUI)app.insertAdjacentHTML('beforeend',freeUI.consult('results'));
+    app.insertAdjacentHTML('beforeend', pageNavigation(state.page));
     enhanceTerms(app); decorateSupplementNotes(app);
-    updateNavigation(); installFixedActions(); persistRun();
+    updateNavigation();
+    persistRun();
     if (state.page === 1) document.getElementById('answer-bar').style.setProperty('--progress', `${E.summary(state.answers).answered / 9 * 100}%`);
     document.getElementById('steps').setAttribute('aria-label','診断の'+pages.length+'画面');
     document.title = `${names[state.page]} | ${window.CTX_EDITION.displayName} | 企業向けCTX`;
@@ -656,15 +653,14 @@
     const step = event.target.closest('[data-step]');
     if (step && Number(step.dataset.step) <= state.max) { navigate(Number(step.dataset.step)); return; }
     const target = event.target.closest('[data-action]'); if (!target) return;
-    const fromDock=Boolean(target.closest('.fixed-actions'));
     switch (target.dataset.action) {
       case 'toggle-mobile-nav': {const open=document.body.dataset.mobileNav!=='open';document.body.dataset.mobileNav=open?'open':'closed';document.getElementById('mobile-progress').setAttribute('aria-expanded',String(open));break;}
       case 'begin': navigate(1); break;
       case 'back': navigate(Math.max(0, state.page - 1)); break;
+      case 'return-to-start': navigate(0); break;
       case 'results': state.notice = ''; navigate(2); break;
       case 'draft': state.notice = ''; navigate(3); break;
       case 'review': state.notice = ''; navigate(4); break;
-      case 'reassess': navigate(1); break;
       case 'sample': changed(); D.themes.forEach((t, i) => { state.answers[t.id] = D.sample[i]; }); render(false); app.querySelector('[data-action="sample"]').focus(); announce('架空の回答例を9テーマに設定しました。'); break;
       case 'clear-answers': changed(); state.answers = {}; render(false); app.querySelector('[data-action="clear-answers"]').focus(); announce('回答をクリアしました。未回答は確認が必要として扱います。'); break;
       case 'reset': document.getElementById('reset-dialog').showModal(); break;

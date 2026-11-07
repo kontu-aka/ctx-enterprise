@@ -17,7 +17,7 @@
     return '<details class="proposal-card r6-human-card" data-r6-human="'+n+'" data-disclosure="'+key+'" '+helpers.opened(key,r.status!=='ready')+'>'+
      '<summary><h3>'+n+' '+field('human-'+n+'-heading',h.heading)+'</h3><span class="status-tag '+r.status+'">'+esc(statusLabel(r.status))+'</span><span class="chevron" aria-hidden="true">⌄</span></summary>'+
      '<div class="r6-human-body"><div class="proposal-copy"><p class="proposal-title">'+field('human-'+n+'-title',h.text.title)+'</p><dl><dt>改善を目指す点</dt><dd>'+para('human-'+n+'-goal',h.text.goal)+'</dd><dt>次にすること</dt><dd>'+para('human-'+n+'-actions',h.text.actions)+'</dd></dl></div><dl class="proposal-contact">'+helpers.contact(r.owner)+'</dl></div></details>';
-   }).join('')+'</div></section><div class="bottom-actions"><div>'+helpers.button('back','← 診断結果へ','secondary')+'</div>'+helpers.button('review','改善内容を確認する →')+'</div>'+helpers.consult()+'</div>';
+   }).join('')+'</div></section>'+helpers.consult()+'</div>';
  }
  root.CTX_R6_VIEW={esc,paragraphMarkup,read,renderProposals,statusLabel};
 })(globalThis);
